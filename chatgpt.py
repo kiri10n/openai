@@ -17,7 +17,7 @@ def main():
     model = "gpt-4-0125-preview"
     # 現在の日付を取得
     current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    output_file = f"./out/script_{current_time}.txt"
+    output_file = f"./output/script_{current_time}.md"
     #
     # settings
     #
@@ -45,8 +45,10 @@ def main():
 
         # 生成されたテキストをファイル出力
         with open(output_file, mode='w', encoding='utf-8') as output_file:
-            output_file.write(f'input : {input_text}\n')
-            output_file.write(f'output: {output_text}\n')
+            output_file.write("## INPUT  ##\n")
+            output_file.write(f'{input_text}\n')
+            output_file.write("## OUTPUT ##\n")
+            output_file.write(f'{output_text}\n')
     except FileNotFoundError:
         print(f'エラー: ファイルが見つかりません')
     except IOError:
