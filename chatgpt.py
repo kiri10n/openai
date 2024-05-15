@@ -1,20 +1,16 @@
 from openai import OpenAI
 import os
 import datetime
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
-# APIキー
-load_dotenv()
-client = OpenAI(
-  api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
-)
 
 def main():
     #
     # settings
     #
     input_file = "input/input.txt"
-    model = "gpt-4-0125-preview"
+    model = "gpt-4o-2024-05-13"
     # 現在の日付を取得
     current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     output_file = f"./output/script_{current_time}.md"
@@ -27,8 +23,10 @@ def main():
         with open(input_file, mode="r", encoding="utf-8") as input_file:
              input_text = input_file.read() # 全てのテキストを読み出す
 
-
-        client = OpenAI()
+        # APIキー
+        client = OpenAI(
+            api_key=os.getenv("OPENAI_PROJECT_API_KEY"),  # this is also the default, it can be omitted
+        )
 
         # ChatGPTにテキスト生成をリクエスト
         response = client.chat.completions.create(
