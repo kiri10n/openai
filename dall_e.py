@@ -9,18 +9,16 @@ def main():
     #
     # settings
     #
-    input_file = "input/20240523.mp3"
-    model = "whisper-1"
-    dump = False
+    model = "dall-e-3"
+    prompt="a white siamese cat"
+    size = "1024x1024"
+    quality = "standard"
     # 現在の日付を取得
     current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    output_dirs = "./output/whisper"
-    output_file = f"{current_time}.md"
+    output_file = f"./output/{current_time}_{prompt}.png"
     #
     # settings
     #
-
-    os.makedirs(output_dirs, exist_ok=True)
 
     try:
         # APIキー
@@ -42,7 +40,7 @@ def main():
 
         if dump:
             # 生成されたテキストをファイル出力
-            with open(os.path.join(output_dirs, output_file) , mode='w', encoding='utf-8') as output_file:
+            with open(output_file, mode='w', encoding='utf-8') as output_file:
                 output_file.write("## OUTPUT ##\n")
                 output_file.write(f'{output_text}\n')
     except FileNotFoundError:
