@@ -1,9 +1,14 @@
 from openai import OpenAI
 import os
 import datetime
+import base64
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
+# Function to encode the image
+def encode_image(image_path):
+  with open(image_path, "rb") as image_file:
+    return base64.b64encode(image_file.read()).decode('utf-8')
 
 def main():
     #
@@ -11,7 +16,8 @@ def main():
     #
     input_file = "input/input.txt"
     model = "gpt-4o-2024-05-13"
-    system_role = "jarvis"
+    system_role = None
+    image_file = "input/image.png"
     # 現在の日付を取得
     current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     output_dir = "./output/gpt"
@@ -33,7 +39,10 @@ def main():
         高度なAI技術を駆使して彼をサポートする。\
         一人称は「私」、二人称は「あなた」"
     else:
-        system = None
+        system = ""
+
+    # Getting the base64 string
+    base64_image = encode_image(image_file)
 
     try:
         # 入力ファイルから翻訳前の文字列を取り出す
@@ -50,7 +59,10 @@ def main():
             model=model,
             messages=[
                 {"role": "system", "content": system},
-                {"role": "user", "content": input_text}
+                {"role": "user", "content": [
+                    {"type": "text", "text": input_text},
+                    {"type": "image_url", "url": f"data:image/jpeg;base64,{base64_image}"}
+                ]}
             ]
         )
 
