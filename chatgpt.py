@@ -17,7 +17,6 @@ def main():
     input_file = "input/input.txt"
     model = "gpt-4o-2024-05-13"
     system_role = None
-    image_file = "input/image.png"
     # 現在の日付を取得
     current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     output_dir = "./output/gpt"
@@ -39,10 +38,7 @@ def main():
         高度なAI技術を駆使して彼をサポートする。\
         一人称は「私」、二人称は「あなた」"
     else:
-        system = ""
-
-    # Getting the base64 string
-    base64_image = encode_image(image_file)
+        system = "簡潔に素晴らしい回答をしてください"
 
     try:
         # 入力ファイルから翻訳前の文字列を取り出す
